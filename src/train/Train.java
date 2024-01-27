@@ -64,4 +64,15 @@ public class Train implements Runnable {
 			}
 		}
 	}
+
+	public Position getPos() {
+		// TODO Auto-generated method stub
+		return pos;
+	}
+	
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
 }
+

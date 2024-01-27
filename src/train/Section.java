@@ -18,20 +18,23 @@ public class Section extends Element {
 
 	@Override
 	public synchronized void enter() throws InterruptedException {
-		while(busy) {
-			wait();
-		}
-		busy=true;
-		test++;
-		System.out.println("arrivée à la section "+this.toString()+"qui possède à présent "+test+" trains");
+	    while (busy || railway.isOppositeDirectionTrainOnTrack()) {
+	        wait();
+	    }
+	    busy = true;
+	    railway.setOppositeDirectionTrainOnTrack(true);
+	    test++;
+	    System.out.println("arrivée à la section " + this.toString() + " qui possède à présent " + test + " trains");
 	}
 
 	@Override
 	public synchronized void leave() {
-		busy= false;
-		notifyAll();
-		test--;
-		System.out.println("depart de la section "+this.toString()+"qui possède à présent "+test+" trains");
+	    busy = false;
+	    railway.setOppositeDirectionTrainOnTrack(false);
+	    notifyAll();
+	    test--;
+	    System.out.println("depart de la section " + this.toString() + " qui possède à présent " + test + " trains");
 	}
 }
+
 
