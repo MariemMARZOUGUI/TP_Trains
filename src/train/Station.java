@@ -25,19 +25,39 @@ public class Station extends Element {
 	}
 
 	@Override
-	public synchronized void enter() throws InterruptedException {
+	public synchronized void enter(Train t) throws InterruptedException {
+		Element[] elements = railway.getElements();
+		if (this==elements[0]  || this==elements[elements.length-1] ) {
+	    	if(t.getPos().getDirection()==Direction.RL ) {
+		        railway.LRTrainOnTrack--;
+		    }
+			else if(t.getPos().getDirection()==Direction.LR ) {
+		        railway.RLTrainOnTrack--;
+		    }
+	    }
+		
 		while(nbTrains==size) {
 			wait();
 		}
 		nbTrains++;	
+		
 		System.out.println("arrivée à la gare "+this.toString()+" qui possède à présent "+nbTrains+" trains");
 
 	}
 
 	@Override
-	public synchronized void leave() {
+	public synchronized void leave(Train t) throws InterruptedException {
+		while (railway.getLRDirectionTrainOnTrack()>0 && t.getPos().getDirection()==Direction.RL || railway.getRLDirectionTrainOnTrack()>0 && t.getPos().getDirection()==Direction.LR) {
+	        wait();
+	    }
 		nbTrains--;
 		notifyAll();
+		if(t.getPos().getDirection()==Direction.RL ) {
+	        railway.RLTrainOnTrack++;
+	    }
+		else if(t.getPos().getDirection()==Direction.LR ) {
+	        railway.LRTrainOnTrack++;
+	    }
 		System.out.println("depart de la gare "+this.toString()+" qui possède à présent "+nbTrains+" trains");
 	}
 }

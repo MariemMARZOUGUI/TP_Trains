@@ -38,7 +38,7 @@ public class Train implements Runnable {
 	}
 	
 	public synchronized void move() throws InterruptedException {
-		this.pos.goToNextElement();
+		this.pos.goToNextElement(this);
 		System.out.println(this);
 	}
 
@@ -55,10 +55,15 @@ public class Train implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			pos.getElement().leave();
+			try {
+				pos.getElement().leave(this);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			try {
 				this.move();
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 			} catch(InterruptedException e) {
 				throw new RuntimeException(e);
 			}

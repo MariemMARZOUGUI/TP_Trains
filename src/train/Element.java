@@ -35,6 +35,8 @@ public abstract class Element {
 	};
 	
 	public Element nextElement(Direction d) {
+		System.out.println("trains en RL: "+railway.RLTrainOnTrack);
+		System.out.println("trains en LR: "+railway.LRTrainOnTrack);
 		Element[] elements=railway.getElements();
 		Element nextElement = this;
 		for (int i=0; i<elements.length; i++) {
@@ -56,8 +58,8 @@ public abstract class Element {
 		return nextElement;		
 	}
 	
-	abstract void enter() throws InterruptedException;
-	abstract void leave();
+	abstract void enter(Train t) throws InterruptedException;
+	abstract void leave(Train t) throws InterruptedException;
 
 	@Override
 	public String toString() {

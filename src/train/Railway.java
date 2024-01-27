@@ -10,7 +10,8 @@ package train;
  */
 public class Railway {
 	private final Element[] elements;
-	private boolean oppositeDirectionTrainOnTrack;
+	public int RLTrainOnTrack;
+	public int LRTrainOnTrack;
 
 	public Railway(Element[] elements) {
 		if(elements == null)
@@ -19,18 +20,29 @@ public class Railway {
 		this.elements = elements;
 		for (Element e : elements)
 			e.setRailway(this);
+		
 	}
 	
 	public Element[] getElements() {
 		return elements;
 	}
 	
-	public synchronized void setOppositeDirectionTrainOnTrack(boolean value) {
-	    oppositeDirectionTrainOnTrack = value;
-	}
+	
 
-	public synchronized boolean isOppositeDirectionTrainOnTrack() {
-	    return oppositeDirectionTrainOnTrack;
+	public int getRLDirectionTrainOnTrack() {
+	    return RLTrainOnTrack;
+	}
+	
+	public int getLRDirectionTrainOnTrack() {
+	    return LRTrainOnTrack;
+	}
+	
+	public void setRLDirectionTrainOnTrack(int i) {
+	    RLTrainOnTrack=i;
+	}
+	
+	public void setLRDirectionTrainOnTrack(int i) {
+	    LRTrainOnTrack=i;
 	}
 
 	@Override

@@ -30,6 +30,9 @@ public class TrainSimulationApp {
         Train train1 = new Train("Train1", p);
 		Train train2 = new Train("Train2", p);
 		Train train3 = new Train("Train3", p1);
+		
+		railway.setLRDirectionTrainOnTrack(0);
+		railway.setRLDirectionTrainOnTrack(0);
 
 		// Create and start threads for trains
 		Thread thread1 = new Thread(train1);
@@ -41,7 +44,7 @@ public class TrainSimulationApp {
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(railwayPanel, BorderLayout.CENTER);
 
-        Timer timer = new Timer(2000, new ActionListener() {
+        Timer timer = new Timer(1000, new ActionListener() {
         	private boolean started = false;
         	
         	@Override
@@ -65,7 +68,7 @@ public class TrainSimulationApp {
 
     private static Railway initializeRailway() {
         Station A = new Station("GareA", 3);
-        Station D = new Station("GareD", 2);
+        Station D = new Station("GareD", 3);
         Section AB = new Section("AB");
         Section BC = new Section("BC");
         Section CD = new Section("CD");

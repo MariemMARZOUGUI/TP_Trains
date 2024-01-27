@@ -17,22 +17,22 @@ public class Section extends Element {
 	}
 
 	@Override
-	public synchronized void enter() throws InterruptedException {
-	    while (busy || railway.isOppositeDirectionTrainOnTrack()) {
+	public synchronized void enter(Train t) throws InterruptedException {
+	    while (busy || railway.getLRDirectionTrainOnTrack()>0 && t.getPos().getDirection()==Direction.RL || railway.getRLDirectionTrainOnTrack()>0 && t.getPos().getDirection()==Direction.LR) {
 	        wait();
 	    }
 	    busy = true;
-	    railway.setOppositeDirectionTrainOnTrack(true);
 	    test++;
 	    System.out.println("arrivée à la section " + this.toString() + " qui possède à présent " + test + " trains");
 	}
 
 	@Override
-	public synchronized void leave() {
+	public synchronized void leave(Train t) {
+		
 	    busy = false;
-	    railway.setOppositeDirectionTrainOnTrack(false);
 	    notifyAll();
 	    test--;
+	    
 	    System.out.println("depart de la section " + this.toString() + " qui possède à présent " + test + " trains");
 	}
 }

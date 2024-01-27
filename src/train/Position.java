@@ -45,6 +45,10 @@ public class Position implements Cloneable {
 		return element;
 	}
 	
+	public Direction getDirection() {
+		return direction;
+	}
+	
 	
 	public void turn() {
 		if (direction == Direction.LR) {
@@ -54,17 +58,17 @@ public class Position implements Cloneable {
 		}
 	}
 	
-	public synchronized void goToNextElement() throws InterruptedException {
+	public synchronized void goToNextElement(Train t) throws InterruptedException {
 		Railway railway= element.getRailway();
 		Element[] elements = railway.getElements();
 		Element nextElement =this.element.nextElement(direction);
-		if ( nextElement==elements[elements.length-1]&& direction == Direction.LR ) {
+		if ( nextElement==elements[elements.length-1] && direction == Direction.LR ) {
 			this.turn();
 		}
-		if ( nextElement==elements[0]&& direction == Direction.RL ) {
+		if ( nextElement==elements[0] && direction == Direction.RL ) {
 			this.turn();
 		}
-		nextElement.enter();
+		nextElement.enter(t);
 		this.element=nextElement;
 	}
 
