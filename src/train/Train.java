@@ -17,7 +17,7 @@ package train;
  * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
  * @version 0.3
  */
-public class Train {
+public class Train implements Runnable {
 	private final String name;
 	private final Position pos;
 
@@ -31,10 +31,15 @@ public class Train {
 
 		this.name = name;
 		this.pos = p.clone();
+		if (this.pos.getElement() instanceof Station) {
+			Station s =(Station) this.pos.getElement();
+			s.updateNbTrains();
+		}
 	}
 	
-	public void move() {
+	public synchronized void move() throws InterruptedException {
 		this.pos.goToNextElement();
+		System.out.println(this);
 	}
 
 	@Override
@@ -45,5 +50,18 @@ public class Train {
 		result.append(" is on ");
 		result.append(this.pos);
 		return result.toString();
+	}
+
+	@Override
+	public void run() {
+		while(true) {
+			pos.getElement().leave();
+			try {
+				this.move();
+				Thread.sleep(2000);
+			} catch(InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 }

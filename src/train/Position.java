@@ -54,7 +54,7 @@ public class Position implements Cloneable {
 		}
 	}
 	
-	public void goToNextElement() {
+	public synchronized void goToNextElement() throws InterruptedException {
 		Railway railway= element.getRailway();
 		Element[] elements = railway.getElements();
 		Element nextElement =this.element.nextElement(direction);
@@ -64,6 +64,7 @@ public class Position implements Cloneable {
 		if ( nextElement==elements[0]&& direction == Direction.RL ) {
 			this.turn();
 		}
+		nextElement.enter();
 		this.element=nextElement;
 	}
 

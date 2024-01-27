@@ -15,25 +15,18 @@ public class Main {
 		System.out.println("\t" + r);
 		Position p = new Position(A, Direction.LR);
 		try {
-			Train t1 = new Train("1", p);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
-			t1.move();
-			System.out.println(t1);
+			Train train1 = new Train("Train1", p);
+			Train train2 = new Train("Train2", p);
+			Train train3 = new Train("Train3", p);
+
+			// Create and start threads for trains
+			Thread thread1 = new Thread(train1);
+			Thread thread2 = new Thread(train2);
+			Thread thread3 = new Thread(train3);
+
+			thread1.start();
+			thread2.start();
+			thread3.start();
 		} catch (BadPositionForTrainException e) {
 			System.out.println("Le train " + e.getMessage());
 		}

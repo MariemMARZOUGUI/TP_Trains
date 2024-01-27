@@ -55,6 +55,9 @@ public abstract class Element {
 		}
 		return nextElement;		
 	}
+	
+	abstract void enter() throws InterruptedException;
+	abstract void leave();
 
 	@Override
 	public String toString() {

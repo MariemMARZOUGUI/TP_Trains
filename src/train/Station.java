@@ -10,11 +10,35 @@ package train;
  */
 public class Station extends Element {
 	private final int size;
+	private int nbTrains;
 
 	public Station(String name, int size) {
 		super(name);
 		if(name == null || size <=0)
 			throw new NullPointerException();
 		this.size = size;
+		nbTrains=0;
+	}
+	
+	public void updateNbTrains() {
+		nbTrains++;
+	}
+
+	@Override
+	public synchronized void enter() throws InterruptedException {
+		while(nbTrains==size) {
+			wait();
+		}
+		nbTrains++;	
+		System.out.println("arrivée à la gare "+this.toString()+" qui possède à présent "+nbTrains+" trains");
+
+	}
+
+	@Override
+	public synchronized void leave() {
+		nbTrains--;
+		notifyAll();
+		System.out.println("depart de la gare "+this.toString()+" qui possède à présent "+nbTrains+" trains");
 	}
 }
+
