@@ -35,8 +35,9 @@ public abstract class Element {
 	};
 	
 	public Element nextElement(Direction d) {
-		System.out.println("trains en RL: "+railway.RLTrainOnTrack);
-		System.out.println("trains en LR: "+railway.LRTrainOnTrack);
+		// comment out to see the number of trains in each direction during the simulation
+		//System.out.println("trains in the direction RL: "+railway.RLTrainOnTrack);
+		//System.out.println("trains in the direction LR: "+railway.LRTrainOnTrack);
 		Element[] elements=railway.getElements();
 		Element nextElement = this;
 		for (int i=0; i<elements.length; i++) {

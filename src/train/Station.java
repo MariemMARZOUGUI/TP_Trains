@@ -41,7 +41,7 @@ public class Station extends Element {
 		}
 		nbTrains++;	
 		
-		System.out.println("arrivée à la gare "+this.toString()+" qui possède à présent "+nbTrains+" trains");
+	    System.out.println(t.getName()+" reached the station " + this.toString() + " that has now " + nbTrains + " trains");
 
 	}
 
@@ -58,7 +58,7 @@ public class Station extends Element {
 		else if(t.getPos().getDirection()==Direction.LR ) {
 	        railway.LRTrainOnTrack++;
 	    }
-		System.out.println("depart de la gare "+this.toString()+" qui possède à présent "+nbTrains+" trains");
+	    System.out.println(t.getName()+" left the station " + this.toString() + " that has now " + nbTrains + " trains");
 	}
 }
 

@@ -9,11 +9,11 @@ package train;
  */
 public class Section extends Element {
 	private boolean busy;
-	private int test;
+	private int nbTrains;
 	public Section(String name) {
 		super(name);
 		busy=false;
-		test=0;
+		nbTrains=0;
 	}
 
 	@Override
@@ -22,18 +22,16 @@ public class Section extends Element {
 	        wait();
 	    }
 	    busy = true;
-	    test++;
-	    System.out.println("arrivée à la section " + this.toString() + " qui possède à présent " + test + " trains");
+	    nbTrains++;
+	    System.out.println(t.getName()+" reached the section " + this.toString() + " that has now " + nbTrains + " trains");
 	}
 
 	@Override
 	public synchronized void leave(Train t) {
-		
 	    busy = false;
 	    notifyAll();
-	    test--;
-	    
-	    System.out.println("depart de la section " + this.toString() + " qui possède à présent " + test + " trains");
+	    nbTrains--;
+	    System.out.println(t.getName()+" left the section " + this.toString() + " that has now " + nbTrains + " trains");
 	}
 }
 

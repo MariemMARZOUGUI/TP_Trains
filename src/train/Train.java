@@ -39,17 +39,7 @@ public class Train implements Runnable {
 	
 	public synchronized void move() throws InterruptedException {
 		this.pos.goToNextElement(this);
-		System.out.println(this);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder result = new StringBuilder("Train[");
-		result.append(this.name);
-		result.append("]");
-		result.append(" is on ");
-		result.append(this.pos);
-		return result.toString();
+		System.out.println(this.toString());
 	}
 
 	@Override
@@ -71,13 +61,21 @@ public class Train implements Runnable {
 	}
 
 	public Position getPos() {
-		// TODO Auto-generated method stub
 		return pos;
 	}
 	
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder("Train[");
+		result.append(this.name);
+		result.append("]");
+		result.append(" is on ");
+		result.append(this.pos);
+		return result.toString();
 	}
 }
 
