@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Diagramme.png</name>
+			<type>1</type>
+			<location>C:/Users/marie/Downloads/Diagramme des classes_2.drawio (1).png</location>
+		</link>
+	</linkedResources>
 </projectDescription>

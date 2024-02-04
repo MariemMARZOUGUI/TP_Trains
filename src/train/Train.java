@@ -25,7 +25,7 @@ public class Train implements Runnable {
 	/**
 	 * Moves the train to the next element of the railway
 	 */
-	public synchronized void move() throws InterruptedException {
+	public void move() throws InterruptedException {
 	    this.pos.goToNextElement(this);
 	    // we add this condition for exercise 4
 	    if (this.getPos().getElement() instanceof Station) {

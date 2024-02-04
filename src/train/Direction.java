@@ -16,5 +16,5 @@ public enum Direction {
 		public String toString() {
 			return "from right to left.";
 		}
-	};
+	}
 }

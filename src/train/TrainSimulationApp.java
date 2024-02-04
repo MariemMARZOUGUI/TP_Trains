@@ -82,7 +82,7 @@ public class TrainSimulationApp {
         Section AB = new Section("AB");
         Section BC = new Section("BC");
         Section CD = new Section("CD");
-        Section DE = new Section("CD");
+        Section DE = new Section("DE");
         Railway r = new Railway(new Element[] { A, AB, BC, C, CD, DE, E });
         System.out.println("The railway is:");
 		System.out.println("\t" + r);
