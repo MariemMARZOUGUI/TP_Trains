@@ -76,14 +76,15 @@ public class TrainSimulationApp {
 
     private static Railway initializeRailway() {
         Station A = new Station("GareA", 4);
+        Station B = new Station("GareB", 2);
         Station D = new Station("GareD", 4);
         Section AB = new Section("AB");
         Section BC = new Section("BC");
         Section CD = new Section("CD");
-        Railway r = new Railway(new Element[] { A, AB, BC, CD, D });
+        Railway r = new Railway(new Element[] { A, AB, B, BC, CD, D });
         System.out.println("The railway is:");
 		System.out.println("\t" + r);
-        return new Railway(new Element[] { A, AB, BC, CD, D });
+        return new Railway(new Element[] { A, AB, B, BC, CD, D });
     }
 }
 

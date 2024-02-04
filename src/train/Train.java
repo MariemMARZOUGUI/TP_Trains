@@ -38,8 +38,12 @@ public class Train implements Runnable {
 	}
 	
 	public synchronized void move() throws InterruptedException {
-		this.pos.goToNextElement(this);
-		System.out.println(this.toString());
+	    this.pos.goToNextElement(this);
+	    if (this.getPos().getElement() instanceof Station) {
+	        // Allow time for the other train to arrive at the intermediate station
+	        Thread.sleep(1000);
+	    }
+	    System.out.println(this.toString());
 	}
 
 	@Override

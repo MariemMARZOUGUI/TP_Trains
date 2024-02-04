@@ -27,14 +27,16 @@ public class Station extends Element {
 	@Override
 	public synchronized void enter(Train t) throws InterruptedException {
 		Element[] elements = railway.getElements();
-		if (this==elements[0]  || this==elements[elements.length-1] ) {
-	    	if(t.getPos().getDirection()==Direction.RL ) {
+		if (this==elements[0]|| this==elements[elements.length-1]) {
+			if(t.getPos().getDirection()==Direction.RL ) {
 		        railway.LRTrainOnTrack--;
 		    }
 			else if(t.getPos().getDirection()==Direction.LR ) {
-		        railway.RLTrainOnTrack--;
-		    }
-	    }
+		       railway.RLTrainOnTrack--;
+		   }
+		}
+		
+	 
 		
 		while(nbTrains==size) {
 			wait();
@@ -52,12 +54,16 @@ public class Station extends Element {
 	    }
 		nbTrains--;
 		notifyAll();
-		if(t.getPos().getDirection()==Direction.RL ) {
-	        railway.RLTrainOnTrack++;
-	    }
-		else if(t.getPos().getDirection()==Direction.LR ) {
-	        railway.LRTrainOnTrack++;
-	    }
+		Element[] elements = railway.getElements();
+		if (this==elements[0]|| this==elements[elements.length-1]) {
+			if(t.getPos().getDirection()==Direction.RL ) {
+		        railway.RLTrainOnTrack++;
+		    }
+			else if(t.getPos().getDirection()==Direction.LR ) {
+		        railway.LRTrainOnTrack++;
+		    }
+		}
+		System.out.println(""+railway.getLRDirectionTrainOnTrack()+""+railway.getRLDirectionTrainOnTrack());
 	    System.out.println(t.getName()+" left the station " + this.toString() + " that has now " + nbTrains + " trains");
 	}
 }
