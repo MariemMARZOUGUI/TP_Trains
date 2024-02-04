@@ -1,11 +1,8 @@
 package train;
 
 /**
- * Représentation de la direction que peut prendre un train : de gauche à droite
- * ou de droite à gauche.
- * 
- * @author Fabien Dagnat <fabien.dagnat@imt-atlantique.fr>
- * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
+ * Representation of the direction of a train : from right to left
+ * or from left to right
  */
 public enum Direction {
 	LR {

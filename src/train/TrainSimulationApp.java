@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Main class with the train simulation with three station and four sections
+ */
 public class TrainSimulationApp {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -36,11 +39,8 @@ public class TrainSimulationApp {
 		System.out.println(train2.toString());
 		System.out.println(train3.toString());
 		System.out.println(train4.toString());
-		
-		railway.setLRDirectionTrainOnTrack(0);
-		railway.setRLDirectionTrainOnTrack(0);
 
-		// Create and start threads for trains
+		// create and start threads for trains
 		Thread thread1 = new Thread(train1);
 		Thread thread2 = new Thread(train2);
 		Thread thread3 = new Thread(train3);
@@ -75,16 +75,18 @@ public class TrainSimulationApp {
     }
 
     private static Railway initializeRailway() {
+    	// set up the elements of the railway
         Station A = new Station("GareA", 4);
-        Station B = new Station("GareB", 2);
-        Station D = new Station("GareD", 4);
+        Station C = new Station("GareC", 2);
+        Station E = new Station("GareE", 4);
         Section AB = new Section("AB");
         Section BC = new Section("BC");
         Section CD = new Section("CD");
-        Railway r = new Railway(new Element[] { A, AB, B, BC, CD, D });
+        Section DE = new Section("CD");
+        Railway r = new Railway(new Element[] { A, AB, BC, C, CD, DE, E });
         System.out.println("The railway is:");
 		System.out.println("\t" + r);
-        return new Railway(new Element[] { A, AB, B, BC, CD, D });
+        return new Railway(new Element[] { A, AB, BC, C, CD, DE, E });
     }
 }
 

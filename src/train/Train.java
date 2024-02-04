@@ -1,21 +1,7 @@
 package train;
 
 /**
- * Représentation d'un train. Un train est caractérisé par deux valeurs :
- * <ol>
- *   <li>
- *     Son nom pour l'affichage.
- *   </li>
- *   <li>
- *     La position qu'il occupe dans le circuit (un élément avec une direction) : classe {@link Position}.
- *   </li>
- * </ol>
- * 
- * @author Fabien Dagnat <fabien.dagnat@imt-atlantique.fr>
- * @author Mayte segarra <mt.segarra@imt-atlantique.fr>
- * Test if the first element of a train is a station
- * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
- * @version 0.3
+ * Representation of the train characterized by its name and its position
  */
 public class Train implements Runnable {
 	private final String name;
@@ -25,22 +11,25 @@ public class Train implements Runnable {
 		if (name == null || p == null)
 			throw new NullPointerException();
 
-		// A train should be first be in a station
+		// a train should be first be in a station
 		if (!(p.getElement() instanceof Station))
 			throw new BadPositionForTrainException(name);
 
 		this.name = name;
 		this.pos = p.clone();
-		if (this.pos.getElement() instanceof Station) {
-			Station s =(Station) this.pos.getElement();
-			s.updateNbTrains();
-		}
+		// we add a train to the station in which the train is initialized
+		Station s =(Station) this.pos.getElement();
+		s.updateNbTrains();
 	}
 	
+	/**
+	 * Moves the train to the next element of the railway
+	 */
 	public synchronized void move() throws InterruptedException {
 	    this.pos.goToNextElement(this);
+	    // we add this condition for exercise 4
 	    if (this.getPos().getElement() instanceof Station) {
-	        // Allow time for the other train to arrive at the intermediate station
+	        // allow time for the other train to arrive at the intermediate station
 	        Thread.sleep(1000);
 	    }
 	    System.out.println(this.toString());
@@ -57,6 +46,7 @@ public class Train implements Runnable {
 			}
 			try {
 				this.move();
+				// allow time for each train to see their movement
 				Thread.sleep(3000);
 			} catch(InterruptedException e) {
 				throw new RuntimeException(e);
@@ -64,10 +54,18 @@ public class Train implements Runnable {
 		}
 	}
 
+	/**
+	 * Returns the position of the train
+	 * @return Position
+	 */
 	public Position getPos() {
 		return pos;
 	}
 	
+	/**
+	 * Returns the name of the train
+	 * @return String
+	 */
 	public String getName() {
 		return name;
 	}

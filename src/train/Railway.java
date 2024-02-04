@@ -2,16 +2,12 @@ package train;
 
 
 /**
- * Représentation d'un circuit constitué d'éléments de voie ferrée : gare ou
- * section de voie
- * 
- * @author Fabien Dagnat <fabien.dagnat@imt-atlantique.fr>
- * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
+ * Representation of a circuit made up of railway track elements: station or track section
  */
 public class Railway {
 	private final Element[] elements;
-	public int RLTrainOnTrack;
-	public int LRTrainOnTrack;
+	public int RLTrainsOnTrack; // specifies the number of trains that are going from right to left
+	public int LRTrainsOnTrack; // specifies the number of trains that are going from left to right
 
 	public Railway(Element[] elements) {
 		if(elements == null)
@@ -20,29 +16,32 @@ public class Railway {
 		this.elements = elements;
 		for (Element e : elements)
 			e.setRailway(this);
-		
+		RLTrainsOnTrack=0;
+		LRTrainsOnTrack=0;
 	}
 	
+	/**
+	 * Return the elements of the train
+	 * @return Element[]
+	 */
 	public Element[] getElements() {
 		return elements;
 	}
-	
-	
 
-	public int getRLDirectionTrainOnTrack() {
-	    return RLTrainOnTrack;
+	/**
+	 * Returns the number of the trains that are going from right to left
+	 * @return RLTrainOnTrack
+	 */
+	public int getRLTrainsOnTrack() {
+	    return RLTrainsOnTrack;
 	}
 	
-	public int getLRDirectionTrainOnTrack() {
-	    return LRTrainOnTrack;
-	}
-	
-	public void setRLDirectionTrainOnTrack(int i) {
-	    RLTrainOnTrack=i;
-	}
-	
-	public void setLRDirectionTrainOnTrack(int i) {
-	    LRTrainOnTrack=i;
+	/**
+	 * Returns the number of the trains that are going from left to right
+	 * @return LRTrainOnTrack
+	 */
+	public int getLRTrainsOnTrack() {
+	    return LRTrainsOnTrack;
 	}
 
 	@Override

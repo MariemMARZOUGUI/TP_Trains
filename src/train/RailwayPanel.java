@@ -3,7 +3,9 @@ package train;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * Draw the components of railway and the trains
+ */
 class RailwayPanel extends JPanel {
     private Railway railway;
     private Train train1, train2, train3, train4;
@@ -24,13 +26,13 @@ class RailwayPanel extends JPanel {
         int startY = getHeight() / 2;
         int spacing = 100;
 
-        // Draw stations and sections
+        // draw stations and sections
         for (int i = 0; i < elements.length; i++) {
             g.drawRect(startX + i * spacing, startY - 10, 100, 20);
             g.drawString(elements[i].toString(), startX + i * spacing + 30, startY + 5);
         }
 
-        // Draw trains
+        // draw trains
         drawTrain(g, train1, startX, startY, spacing);
         drawTrain(g, train2, startX, startY, spacing);
         drawTrain(g, train3, startX, startY, spacing);

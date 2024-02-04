@@ -1,23 +1,10 @@
 package train;
 
 /**
- * Représentation de la position d'un train dans le circuit. Une position
- * est caractérisée par deux valeurs :
- * <ol>
- *   <li>
- *     L'élément où se positionne le train : une gare (classe  {@link Station})
- *     ou une section de voie ferrée (classe {@link Section}).
- *   </li>
- *   <li>
- *     La direction qu'il prend (enumération {@link Direction}) : de gauche à
- *     droite ou de droite à gauche.
- *   </li>
- * </ol>
- * @author Fabien Dagnat <fabien.dagnat@imt-atlantique.fr> Modifié par Mayte
- *         Segarra 
- * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
- *         
- * @version 0.3
+ * Representation of the position of a train in the circuit. One position
+ * is characterized by two values:
+ * - The element where the train is positioned: a station or a section of track.
+ * - The direction it is taking: from left to right or right to left.
  */
 public class Position implements Cloneable {
 	private Direction direction;
@@ -26,7 +13,6 @@ public class Position implements Cloneable {
 	public Position(Element elt, Direction d) {
 		if (elt == null || d == null)
 			throw new NullPointerException();
-
 		this.element = elt;
 		this.direction = d;
 	}
@@ -41,15 +27,25 @@ public class Position implements Cloneable {
 		}
 	}
 
+	/**
+	 * Get the element of the train
+	 * @return Element
+	 */
 	public Element getElement() {
 		return element;
 	}
 	
+	/**
+	 * Get the direction of the train
+	 * @return Direction
+	 */
 	public Direction getDirection() {
 		return direction;
 	}
 	
-	
+	/**
+	 * Change the direction of the train
+	 */
 	public void turn() {
 		if (direction == Direction.LR) {
 			direction = Direction.RL;
@@ -58,16 +54,25 @@ public class Position implements Cloneable {
 		}
 	}
 	
+	/**
+	 * Move the train to the next element on the railway
+	 * @param Train 
+	 */
 	public synchronized void goToNextElement(Train t) throws InterruptedException {
+		// determine the next element that the train has to go to
 		Railway railway= element.getRailway();
 		Element[] elements = railway.getElements();
 		Element nextElement =this.element.nextElement(direction);
+		
+		// change the direction of the train if is reaching the initial or the last station
 		if ( nextElement==elements[elements.length-1] && direction == Direction.LR ) {
 			this.turn();
 		}
 		if ( nextElement==elements[0] && direction == Direction.RL ) {
 			this.turn();
 		}
+		
+		// enter the next element
 		nextElement.enter(t);
 		this.element=nextElement;
 	}

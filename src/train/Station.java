@@ -1,12 +1,9 @@
 package train;
 
 /**
- * Représentation d'une gare. C'est une sous-classe de la classe {@link Element}.
- * Une gare est caractérisée par un nom et un nombre de quais (donc de trains
- * qu'elle est susceptible d'accueillir à un instant donné).
- * 
- * @author Fabien Dagnat <fabien.dagnat@imt-atlantique.fr>
- * @author Philippe Tanguy <philippe.tanguy@imt-atlantique.fr>
+ * Representation of a train station. It is a subclass of the Element class.
+ * A station is characterized by a name and a number of platforms (i.e. trains) 
+ * that it is likely to host at a given time.
  */
 public class Station extends Element {
 	private final int size;
@@ -20,50 +17,62 @@ public class Station extends Element {
 		nbTrains=0;
 	}
 	
+	/**
+	 * Updates the number of trains in the station
+	 */
 	public void updateNbTrains() {
 		nbTrains++;
 	}
 
+	/**
+	 * Process the arrival of the train
+	 * @param Train
+	 */
 	@Override
 	public synchronized void enter(Train t) throws InterruptedException {
-		Element[] elements = railway.getElements();
-		if (this==elements[0]|| this==elements[elements.length-1]) {
-			if(t.getPos().getDirection()==Direction.RL ) {
-		        railway.LRTrainOnTrack--;
-		    }
-			else if(t.getPos().getDirection()==Direction.LR ) {
-		       railway.RLTrainOnTrack--;
-		   }
-		}
-		
-	 
-		
+		// prevent station entry if the station is full
 		while(nbTrains==size) {
 			wait();
 		}
-		nbTrains++;	
+		Element[] elements = railway.getElements();
 		
+		// update the number of trains in each direction 
+		if (this==elements[0]|| this==elements[elements.length-1]) {
+			if(t.getPos().getDirection()==Direction.RL ) {
+		        railway.LRTrainsOnTrack--;
+		    }
+			else if(t.getPos().getDirection()==Direction.LR ) {
+		       railway.RLTrainsOnTrack--;
+		   }
+		}
+		nbTrains++;	
 	    System.out.println(t.getName()+" reached the station " + this.toString() + " that has now " + nbTrains + " trains");
-
 	}
 
+	/**
+	 * Process the departure of the train
+	 * @param Train
+	 */
 	@Override
 	public synchronized void leave(Train t) throws InterruptedException {
-		while (railway.getLRDirectionTrainOnTrack()>0 && t.getPos().getDirection()==Direction.RL || railway.getRLDirectionTrainOnTrack()>0 && t.getPos().getDirection()==Direction.LR) {
+		// prevent station exits if trains in the other direction are on the line.
+		while (railway.getLRTrainsOnTrack()>0 && t.getPos().getDirection()==Direction.RL 
+				|| railway.getRLTrainsOnTrack()>0 && t.getPos().getDirection()==Direction.LR) {
 	        wait();
 	    }
 		nbTrains--;
 		notifyAll();
 		Element[] elements = railway.getElements();
+		
+		// update the number of trains in each direction 
 		if (this==elements[0]|| this==elements[elements.length-1]) {
 			if(t.getPos().getDirection()==Direction.RL ) {
-		        railway.RLTrainOnTrack++;
+		        railway.RLTrainsOnTrack++;
 		    }
 			else if(t.getPos().getDirection()==Direction.LR ) {
-		        railway.LRTrainOnTrack++;
+		        railway.LRTrainsOnTrack++;
 		    }
 		}
-		System.out.println(""+railway.getLRDirectionTrainOnTrack()+""+railway.getRLDirectionTrainOnTrack());
 	    System.out.println(t.getName()+" left the station " + this.toString() + " that has now " + nbTrains + " trains");
 	}
 }
