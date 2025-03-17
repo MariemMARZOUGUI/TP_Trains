@@ -1,7 +1,5 @@
-
 # **TP_Trains**
-
-This code represents a simulation of trains running on a railway track consisting of different sections and stations.
+A simulation of trains running on a railway track consisting of different sections and stations. 
 
 ## **Class Diagram**:
 ![Diagramme.png](Diagramme.png)
